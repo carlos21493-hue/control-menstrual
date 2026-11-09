@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#e91e63" />
+  <title>Ciclo · Privado y Offline</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Mi Ciclo</h1>
+    <span class="badge" id="offline-badge" hidden>Offline</span>
+  </header>
+
+  <main>
+    <section id="summary" class="summary"></section>
+
+    <nav class="tabs">
+      <button class="tab active" data-view="calendar">Calendario</button>
+      <button class="tab" data-view="register">Registro</button>
+      <button class="tab" data-view="history">Historial</button>
+    </nav>
+
+    <section id="view-calendar" class="view active">
+      <div class="calendar-controls">
+        <button id="prev-month" aria-label="Mes anterior">‹</button>
+        <h2 id="month-label"></h2>
+        <button id="next-month" aria-label="Mes siguiente">›</button>
+      </div>
+      <div class="calendar-legend">
+        <span><i class="dot period"></i>Periodo</span>
+        <span><i class="dot predicted"></i>Predicción</span>
+        <span><i class="dot fertile"></i>Fértil</span>
+      </div>
+      <div id="calendar" class="calendar"></div>
+    </section>
+
+    <section id="view-register" class="view">
+      <form id="daily-form" class="card">
+        <h2>Registro diario</h2>
+        <label>Fecha
+          <input type="date" id="reg-date" required />
+        </label>
+
+        <fieldset>
+          <legend>Flujo</legend>
+          <div class="chips" id="flow-chips">
+            <button type="button" data-value="none" class="chip active">Ninguno</button>
+            <button type="button" data-value="light" class="chip">Ligero</button>
+            <button type="button" data-value="medium" class="chip">Medio</button>
+            <button type="button" data-value="heavy" class="chip">Abundante</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Síntomas</legend>
+          <div class="chips" id="symptom-chips">
+            <button type="button" data-value="cramps" class="chip">Cólicos</button>
+            <button type="button" data-value="headache" class="chip">Dolor cabeza</button>
+            <button type="button" data-value="bloating" class="chip">Hinchazón</button>
+            <button type="button" data-value="acne" class="chip">Acné</button>
+            <button type="button" data-value="fatigue" class="chip">Fatiga</button>
+            <button type="button" data-value="backache" class="chip">Dolor lumbar</button>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Estado de ánimo</legend>
+          <div class="chips" id="mood-chips">
+            <button type="button" data-value="happy" class="chip">😊 Feliz</button>
+            <button type="button" data-value="calm" class="chip">😌 Calma</button>
+            <button type="button" data-value="irritable" class="chip">😠 Irritable</button>
+            <button type="button" data-value="sad" class="chip">😢 Triste</button>
+            <button type="button" data-value="anxious" class="chip">😰 Ansiosa</button>
+          </div>
+        </fieldset>
+
+        <label>Notas
+          <textarea id="reg-notes" rows="2" placeholder="Opcional…"></textarea>
+        </label>
+
+        <button type="submit" class="btn-primary">Guardar</button>
+      </form>
+    </section>
+
+    <section id="view-history" class="view">
+      <h2>Historial</h2>
+      <ul id="history-list" class="history-list"></ul>
+      <button id="export-btn" class="btn-secondary">Exportar datos (JSON)</button>
+      <button id="wipe-btn" class="btn-danger">Borrar todos los datos</button>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

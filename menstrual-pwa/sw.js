@@ -1,4 +1,4 @@
-const CACHE = 'ciclo-v1';
+const CACHE = 'ciclo-v3'; // Cambié la versión para forzar la actualización
 const ASSETS = [
   './',
   './index.html',
@@ -13,7 +13,9 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));
+  e.waitUntil(
+    caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', (e) => {
@@ -25,7 +27,16 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
+  // Si es una navegación (abrir la app), intenta buscar en la red, si falla usa el index.html de la caché
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request).catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
+  // Para el resto de archivos (CSS, JS, imágenes), busca en caché primero
   e.respondWith(
-    caches.match(e.request).then((cached) => cached || fetch(e.request).catch(() => cached))
+    caches.match(e.request).then((cached) => cached || fetch(e.request))
   );
 });
